@@ -11,41 +11,6 @@ Search.appendIndex(
             "summary": "Main\u0020controller",
             "url": "classes/GSC-ApiPresenter.html#method_process"
         },                {
-            "fqsen": "\\GSC\\ApiPresenter\u003A\u003AsortByIndex\u0028\u0029",
-            "name": "sortByIndex",
-            "summary": "Sort\u0020array\u0020by\u0020index\u0020key",
-            "url": "classes/GSC-ApiPresenter.html#method_sortByIndex"
-        },                {
-            "fqsen": "\\GSC\\ApiPresenter\u003A\u003AgetChangelog\u0028\u0029",
-            "name": "getChangelog",
-            "summary": "Get\u0020colorized\u0020changelog",
-            "url": "classes/GSC-ApiPresenter.html#method_getChangelog"
-        },                {
-            "fqsen": "\\GSC\\ApiPresenter\u003A\u003AsaveLastSeen\u0028\u0029",
-            "name": "saveLastSeen",
-            "summary": "Save\u0020last\u0020seen\u0020Unix\u0020timestamp",
-            "url": "classes/GSC-ApiPresenter.html#method_saveLastSeen"
-        },                {
-            "fqsen": "\\GSC\\ApiPresenter\u003A\u003AcheckKey\u0028\u0029",
-            "name": "checkKey",
-            "summary": "Check\u0020REST\u0020API\u0020key\u0020validity",
-            "url": "classes/GSC-ApiPresenter.html#method_checkKey"
-        },                {
-            "fqsen": "\\GSC\\ApiPresenter\u003A\u003AgetDiscounts\u0028\u0029",
-            "name": "getDiscounts",
-            "summary": "Get\u0020beer\u0020discounts\u0020from\u0020a\u0020file",
-            "url": "classes/GSC-ApiPresenter.html#method_getDiscounts"
-        },                {
-            "fqsen": "\\GSC\\ApiPresenter\u003A\u003AgetToday\u0028\u0029",
-            "name": "getToday",
-            "summary": "Get\u0020current\u0020date",
-            "url": "classes/GSC-ApiPresenter.html#method_getToday"
-        },                {
-            "fqsen": "\\GSC\\ApiPresenter\u003A\u003AgetSalt\u0028\u0029",
-            "name": "getSalt",
-            "summary": "Get\u0020daily\u0020salt",
-            "url": "classes/GSC-ApiPresenter.html#method_getSalt"
-        },                {
             "fqsen": "\\GSC\\ApiPresenter\u003A\u003AaccessLimiter\u0028\u0029",
             "name": "accessLimiter",
             "summary": "Redis\u0020access\u0020limiter",
@@ -90,6 +55,16 @@ Search.appendIndex(
             "name": "logger",
             "summary": "Google\u0020Stackdriver\u0020logger",
             "url": "namespaces/gsc.html#function_logger"
+        },                {
+            "fqsen": "\\GSC\\AppPresenter",
+            "name": "AppPresenter",
+            "summary": "Mini\u0020Presenter",
+            "url": "classes/GSC-AppPresenter.html"
+        },                {
+            "fqsen": "\\GSC\\AppPresenter\u003A\u003Aprocess\u0028\u0029",
+            "name": "process",
+            "summary": "Main\u0020controller",
+            "url": "classes/GSC-AppPresenter.html#method_process"
         },                {
             "fqsen": "\\GSC\\APresenter",
             "name": "APresenter",
@@ -955,16 +930,6 @@ Search.appendIndex(
             "name": "CODESET",
             "summary": "",
             "url": "classes/GSC-ErrorPresenter.html#constant_CODESET"
-        },                {
-            "fqsen": "\\GSC\\LahvePresenter",
-            "name": "LahvePresenter",
-            "summary": "Mini\u0020Presenter",
-            "url": "classes/GSC-LahvePresenter.html"
-        },                {
-            "fqsen": "\\GSC\\LahvePresenter\u003A\u003Aprocess\u0028\u0029",
-            "name": "process",
-            "summary": "Main\u0020controller",
-            "url": "classes/GSC-LahvePresenter.html#method_process"
         },                {
             "fqsen": "\\GSC\\LoginPresenter",
             "name": "LoginPresenter",
