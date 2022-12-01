@@ -1,0 +1,267 @@
+<div id="appinfo_modal" class="modal hidden">
+  <article class="no-padding">
+    <div class="row no-wrap no-space">
+      <div class="col">
+        <div class="padding">
+          <h5 class="bold white-text" tabindex="-1">{{ l.tit_appinfo }}</h5>
+          <div>
+            <div class="bold">
+              <a rel=nofollow target=_blank class="green-text alias" href="https://github.com/GSCloud/app">https://github.com/GSCloud/app</a>
+            </div>
+            <br>
+            <div class="small-text" tabindex="-1">
+              {{ l.text_version }} <b class="white-text">{{ VERSION_SHORT }}</b>
+              &nbsp;&nbsp;
+              {{ l.text_date }} <b class="white-text">{{ VERSION_DATE }}</b>
+              <br>
+              <div class="center bold large-text orange-text">
+                {{>webshare}}
+              </div>
+              <br>
+              <nav class="container">
+                <button class="nav_api grey responsive bold white-text">{{ l.but_api }}</button>
+              </nav>
+            </div>
+          </div>
+          <nav class="container">
+            <button class="nav_update responsive blue bold white-text">{{ l.but_update }}</button>
+          </nav>
+          <br>
+          <div class="row">
+            <div class="col s6">
+              <a href="https://web.dev/progressive-web-apps/"><img class="responsive" src="{{ cdn }}/img/pwa.png" alt="PWA"/></a>
+            </div>
+            <div class="col s6">
+              <a href="https://beercss.com/"><img class="responsive" src="{{ cdn }}/img/beercss.png" alt="Beercss"/></a>
+            </div>
+          </div>
+          <div class="small-text bold center">
+            {{ l.author }}
+          </div>
+          <div class="small-text center">
+            {{ l.no_cookies }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+<div id="err_connection" class="toast pink white-text hidden">
+  <i>error</i>
+  <span>{{ l.err_connection}}</span>
+</div>
+<div id="xhr_error" class="toast pink white-text hidden">
+  <i>error</i>
+  <span id="xhr_error_text"></span>
+</div>
+<div id="config" class="white-text hidden section">
+  <div class="center-align padding">
+    <div class="padding" tabindex="-1">
+      <div class="row large-space">
+        <div class="col s6 right-align">
+          <label class="switch">
+            <input type="checkbox" class="ui">
+            <span>{{ l.switch_design }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="user" class="white-text hidden section">
+  <div class="center-align padding">
+    <div class="left-align no-padding" tabindex="-1">
+      {{^user.id}}
+      <div class="container">
+        <div class="row">
+          <div class="column">
+            <div class="center">
+              {{>login}}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/user.id}}
+      <div class="center-align small-padding" tabindex="-1">
+        {{l.text_quota }}&nbsp;<span class="bold quota_actual"></span>/<span class="bold quota_total"></span>
+      </div>
+      {{#user.id}}
+      <article class="border">
+        <div class="row">
+          <div class="column">
+            <div class="center">
+              {{>logout}}
+            </div>
+          </div>
+        </div>
+      </article>
+      {{/user.id}}
+    </div>
+  </div>
+{{#admin_group_tester}}
+    <div class="center-align padding" tabindex="-1">
+      <a href="?cssdebug=1&nonce={{ nonce }}" class="">
+        <button class="responsive blue bold white-text">CSS debugger</button>
+      </a>
+    </div>
+    <article id="debuglist" class="truncate left-align black small-padding small-text" tabindex="-1">
+    </article>
+{{/admin_group_tester}}
+</div>
+
+<section>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget placerat risus. Etiam pulvinar justo non congue gravida. Sed venenatis sapien sit amet lorem pharetra, non tincidunt mauris rhoncus. Donec sed quam consectetur, viverra urna sit amet, cursus tellus. Suspendisse potenti. Phasellus ullamcorper, tortor quis condimentum ullamcorper, justo lacus lacinia sapien, ac scelerisque tellus est et eros. Donec tempor aliquet orci, id eleifend augue tempus non.
+  </p>
+    Aenean dictum, tortor nec auctor euismod, erat sapien pretium eros, nec scelerisque risus velit et mi. Praesent diam justo, mollis et consequat sed, feugiat eget ligula. Morbi non ipsum congue, congue augue a, ultrices nibh. Sed eget cursus libero. Aliquam in metus vitae massa tincidunt porttitor. Mauris venenatis dictum risus id mollis. Curabitur in ante lobortis, consectetur augue quis, ultrices lacus. Vivamus luctus scelerisque varius. In hac habitasse platea dictumst. Donec egestas elit vitae arcu tincidunt ultrices. Nullam luctus ante sed dolor mollis mattis. Nulla blandit purus nec massa condimentum, nec porta massa pharetra. Curabitur vitae faucibus sem. Quisque ultricies efficitur justo vitae pulvinar. Donec accumsan velit id porttitor dignissim.
+  </p>
+  <p>
+    Etiam rhoncus, mauris non placerat condimentum, metus magna posuere arcu, cursus porttitor nisi urna eget elit. Pellentesque et dapibus nulla, sed condimentum sapien. Duis vitae dictum orci. Duis dui mauris, ultrices ac ipsum eget, venenatis vehicula nulla. Phasellus eu ultrices urna. Phasellus consectetur metus et orci suscipit ultricies. Proin posuere pulvinar ipsum ut fringilla. Ut a fringilla diam, nec volutpat nisl.
+  </p>
+  <p>
+    Vestibulum id ante quis mi dapibus aliquet ut non eros. Phasellus sodales nulla eget mattis convallis. Nam sit amet turpis laoreet, imperdiet arcu eu, sodales ex. Fusce eget mi eget urna efficitur tincidunt. Nulla facilisi. In eu dolor vitae libero imperdiet dictum. Aenean consequat auctor dolor, et finibus mauris. Maecenas porttitor tincidunt ex et fringilla. Curabitur in nunc est. Quisque in iaculis ante. Vestibulum sed fermentum ligula. Quisque non semper justo.
+  </p>
+  <p>
+    In ut urna vel leo tempus egestas. Mauris dictum interdum consectetur. Nullam molestie lobortis libero, ut facilisis dolor cursus dictum. In hac habitasse platea dictumst. Nam varius erat mi, quis facilisis sapien pharetra nec. Duis eget lobortis ante. Curabitur accumsan efficitur nulla et laoreet. Proin dapibus, turpis ac faucibus commodo, dolor tortor mattis magna, at pharetra est nisl in risus. Praesent at auctor enim.
+  </p>
+</section>
+
+<script>
+  (function (w, $, undefined) {
+    'use strict';
+
+    // something is really broken = unsupported browser
+    if (!localStorage) {
+      w.location.href = '/err/600';
+      if (!localStorage['uuid']) {
+        w.location.href = '/err/600';
+      }
+    }
+
+    // last interaction time
+    GSC.lastclick = null
+
+    // user information
+    GSC.user = null;
+
+    // list of modals
+    GSC.modals = [];
+
+    // data cache
+    GSC.cache = [];
+
+    // context menu
+    w.oncontextmenu = function(e) {
+      if (e.target && e.target.id) {
+        // switch by id
+        switch (e.target.id) {
+          case 'logo':
+            if (GSC.touch) $('.nav_update').click();
+            break;
+
+          default:
+            //console.log(e.target.id);
+        }
+      }
+      if (location.protocol == 'http:') return true; // true = enable context menu on localhost
+      return false; // false = prevent context menu
+    }
+
+    // *** GSC FUNCTIONS ***
+
+    // GSC.ComOn() - communication icon fade-in = ON
+    if (typeof GSC.ComOn !== 'function') GSC.ComOn = function() {
+      if (GSC.offline) return;
+      if (!document.hidden) {
+        $('#comm').removeClass('hidden').fadeIn(5);
+      }
+    }
+
+    // GSC.ComOff() - communication icon fade-out = OFF
+    if (typeof GSC.ComOff !== 'function') GSC.ComOff = function() {
+      $('#comm').removeClass('hidden').fadeOut(25);
+    }
+
+    // GSC.D() - add text to debug list (string)
+    if (typeof GSC.D !== 'function') GSC.D = function(x) {
+      if (x === undefined) return;
+      var current = new Date();
+      var t = current.toLocaleTimeString(); 
+      $('#debuglist').prepend('<p><span class="green-text">' + t + '</span>&nbsp;' + x + '</p>');
+    }
+
+    // *** DELAYED FUNCTIONS ***
+
+    // AJAX event handlers
+    GSC._fn.push(function XHR() {
+      $(document).ajaxSend(function(evt, request, settings) {
+        GSC.ComOn();
+        GSC.D('<b>'
+          + settings.type
+          + '</b> <a class="blue-text underline" target=_blank href="'
+          + settings.url + '">'
+          + settings.url + '</a>');
+      });
+      $(document).ajaxComplete(function() {
+        GSC.ComOff();
+      });
+    });
+
+    // custom functions
+    GSC._fn.push(function app() {
+
+      // set quota text
+      function setQuota(data) {
+          if (data.api_usage) $('.quota_actual').html(data.api_usage);
+          if (data.api_quota) $('.quota_total').html(data.api_quota);
+      };
+
+      // check version
+      function checkVersion() {
+        if (GSC.offline) return;
+        // 10 secs. timeout limiter
+        if (GSC.version_timestamp && (GSC.version_timestamp + 10*1000 > +new Date())) return false;
+        var nonce = '?nonce=' + Math.round(Math.random() * 1000000);
+        $.get('/api/v1/GetVersion' + nonce, function(data) {
+          setQuota(data);
+          GSC.version_timestamp = +new Date();
+          if (data && data.data && data.data.version) {
+            if (data.data.version != '{{ VERSION }}') {
+              if (GSC.chverint) {
+                clearInterval(GSC.chverint);
+              }
+              $('.nav_app>span.badge').removeClass('hidden');
+              $('.nav_update').removeClass('blue').addClass('red');
+              GSC.D('<span class="red bold white-text">&nbsp;NEW VERSION IS AVAILABLE!&nbsp;</span>');
+              // skip the modal dialog if user interaction is under 60 seconds
+              if (GSC.lastclick && (+new Date() < (GSC.lastclick + 60*1000))) return;
+              if (GSC.modals.length) {
+                GSC.modals.forEach(el => {
+                  $('#' + el).removeClass('active');
+                });
+              }
+              GSC.modals = [];
+              GSC.modals.push('appinfo_modal');
+              $('#appinfo_modal').addClass('active');
+            }
+          }
+        });
+      }
+
+      // check backend version
+      GSC.chverint = setInterval(function() {
+        checkVersion()
+      }, 30*1000);
+      checkVersion();
+    });
+
+    // UI theme
+    GSC._fn.push(function setUItheme() {
+      ui('theme', {
+        dark: '--primary:#c00000;--on-primary:#5f150d;--primary-container:#7d2b20;--on-primary-container:#ffdad3;--secondary:#e7bdb6;--on-secondary:#442925;--secondary-container:#5d3f3a;--on-secondary-container:#ffdad3;--tertiary:#dec48c;--on-tertiary:#3e2e04;--tertiary-container:#564418;--on-tertiary-container:#fbdfa5;--error:#ffb4a9;--error-container:#930006;--on-error:#680003;--on-error-container:#ffdad4;--background:#201a19;--on-background:#ede0de;--surface:#201a19;--on-surface:#ede0de;--surface-variant:#534341;--on-surface-variant:#d8c2be;--outline:#a08c89;--inverse-on-surface:#201a19;--inverse-surface:#ede0de;--inverse-primary:#9c4235;--shadow:#000000;',
+        light: '--primary:#c00000;--on-primary:#ffffff;--primary-container:#ffdad3;--on-primary-container:#410000;--secondary:#775752;--on-secondary:#ffffff;--secondary-container:#ffdad3;--on-secondary-container:#2c1511;--tertiary:#705c2e;--on-tertiary:#ffffff;--tertiary-container:#fbdfa5;--on-tertiary-container:#261a00;--error:#ba1b1b;--error-container:#ffdad4;--on-error:#ffffff;--on-error-container:#410001;--background:#fcfcfc;--on-background:#201a19;--surface:#fcfcfc;--on-surface:#201a19;--surface-variant:#f5deda;--on-surface-variant:#534341;--outline:#867370;--inverse-on-surface:#fbeeec;--inverse-surface:#362f2e;--inverse-primary:#ffb4a6;--shadow:#000000;'
+      });
+    });
+
+  })(window, $);
+</script>

@@ -1,0 +1,182 @@
+<!-- top navigation -->
+<nav id="top_nav" class="top hidden">
+  <a class="nav_app">
+    <span class="badge circle left red bold white-text hidden">❕</span>
+    <img id="logo" class="square large"
+      src="{{ cdn }}/img/logo.png"/>
+  </a>
+  <a class="nav_config">
+    <i tabindex="-1" class="large" data-color="blue-text">build</i>
+  </a>
+  <a class="nav_user">
+    <i tabindex="-1" class="large" data-color="lime-text">face</i>
+  </a>
+</nav>
+
+<script>
+  (function (w, $, undefined) {
+    "use strict";
+
+    // green progress bar
+    w.onscroll = onscroll;
+    function onscroll() {
+      GSC.lastclick = +new Date();
+      $('.toast').removeClass('active');
+      var scroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (scroll / height) * 100;
+      if (document.getElementById("progressbar")) document.getElementById("progressbar").style.width = scrolled + "%";
+
+      // fix top navigation and comm icon on touch enabled devices
+      if (GSC.touch) {
+        if (scroll > 100) {
+          $("#top_nav").hide(250);
+          $("#comm").css('top', 0);
+        } else {
+          $("#top_nav").show(100);
+          $("#comm").css('top', '85px');
+        }
+      }
+    };
+
+    // *** DELAYED FUNCTIONS ***
+    GSC._fn.push(function UI() {
+
+      // set UI mode
+      function setUImode() {
+        if (parseBool(localStorage["ui"])) {
+          GSC.ui = 'light';
+          ui('mode', 'light');
+          $('.white-text').removeClass('white-text').addClass('black-text');
+          $('#debuglist').addClass('white-text');
+          $('.yellow-text').removeClass('yellow-text').addClass('red-text');
+        } else {
+          GSC.ui = 'dark';
+          ui('mode', 'dark');
+          $('.black-text').removeClass('black-text').addClass('white-text');
+          $('#debuglist').addClass('white-text');
+          $('.red-text').removeClass('red-text').addClass('yellow-text');
+        }
+      }
+
+      // set active navigation by element
+      function setNavigation(el) {
+        if (!el) return;
+        if (!$('.' + el)) return;
+        window.scrollTo({
+          top: 0, left: 0
+        });
+        $('#avatar').removeClass('large');
+
+        // remove modals
+        if (GSC.modals.length) {
+          GSC.modals.forEach(el => {
+            $('#' + el).removeClass('active');
+          });
+        }
+
+        // set UI
+        $('nav i, nav div').removeClass();
+        $('.section').addClass('hidden');
+        $('.' + el + '>i').addClass($('.' + el + '>i').data('color')).addClass('large');
+        $('.' + el + '>div').addClass($('.' + el + '>i').data('color')).addClass('bold');
+      }
+
+      // NAVIGATION CLICK HANDLERS
+
+      // logo
+      $('.nav_app').click(function () {
+        setTimeout(function() {
+          $('#appinfo_modal').toggleClass('active');
+          $('#changelog_modal').removeClass('active');
+          GSC.modals = [];
+          GSC.modals.push('appinfo_modal');
+        }, 10)
+      });
+
+      // app update
+      $('.nav_update').click(function () {
+        if (GSC.offline) { // toast
+          setTimeout(function () {
+            $('#err_connection').addClass('active');
+          }, 10);
+          return;
+        }
+        $('nav,body').hide(250);
+        setTimeout(function () {
+          top.location.replace("?nonce={{ nonce }}");
+        }, 250);
+      });
+
+      // go to API page
+      $('.nav_api').click(function() {
+        if (GSC.offline) { // toast
+          setTimeout(function () {
+            $('#err_connection').addClass('active');
+          }, 10);
+          return;
+        }
+        top.location.href = '/api';
+      });
+     
+      // config
+      $('.nav_config').click(function() {
+        setNavigation(this.className);
+        $('#config').removeClass('hidden');
+      });
+      
+      // user
+      $('.nav_user').click(function() {
+        setNavigation(this.className);
+        $('#user').removeClass('hidden');
+        $('#avatar').addClass('large');
+      });
+
+      // settings: UI
+      $('.ui').click(function() {
+        localStorage["ui"] = $(this).is(":checked");
+        setUImode();
+      });
+
+      // OTHER HANDLERS AND RUNTIME
+
+      // remove modals and toasts on every click
+      $('.section,main,nav').click(function() {
+        GSC.lastclick = +new Date();
+        $('.toast').removeClass('active');
+        if (GSC.modals.length) {
+          // fix logo modal
+          if (GSC.modals[0] && GSC.modals[0] == 'appinfo_modal') return;
+          GSC.modals.forEach(el => {
+            $('#' + el).removeClass('active');
+          });
+          GSC.modals = [];
+        }
+      });
+
+      // click on main section
+      $('section').click(function() {
+        $('.section').addClass('hidden');
+        $('nav i, nav div').removeClass();
+      });
+
+      // process switches
+      $('.ui').prop('checked', localStorage["ui"] == "true");
+
+      // set UI
+      setUImode();
+      $('nav,body,#offline,.modal,.toast').removeClass('hidden');
+      $('nav,body').hide().show(350);
+
+      // set default classes
+      $('.section').addClass('hidden');
+      $('nav i, nav div').removeClass();
+
+    });
+  })(window, $);
+
+  // reload the app on screen orientation change
+  screen.orientation.addEventListener('change', function() {
+    location.reload();
+  });
+</script>

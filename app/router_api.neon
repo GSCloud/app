@@ -1,0 +1,10 @@
+GetVersion:
+  path: "/api/v1/GetVersion"
+  method: GET
+  api_description: "Get version"
+  api_info: "Returns (JSON): git hash version (string)"
+  api: true
+  assert_json: true
+  assert_httpcode: 200
+  finished: true
+  presenter: api
