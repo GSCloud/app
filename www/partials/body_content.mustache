@@ -207,7 +207,7 @@
           if (data && data.data && data.data.version) {
             if (data.data.version != '{{ VERSION }}') {
               if (GSC.chverint) clearInterval(GSC.chverint);
-              $('.nav_app>span.badge').removeClass('hidden');
+              $('#top_nav span.badge').removeClass('hidden');
               $('.nav_update').removeClass('blue').addClass('red');
               GSC.D('<span class="red bold white-text">&nbsp;NEW VERSION IS AVAILABLE!&nbsp;</span>');
 
