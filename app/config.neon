@@ -1,4 +1,4 @@
-### APP
+### THE APP
 
 # uncomment to force debugger !!!
 #dbg: TRUE
@@ -62,3 +62,13 @@ l:
   tit_appinfo: 'App'
   title: 'THE APP'
   webshare_button: '<i>share</i>&nbsp;&nbsp;share'
+
+swpreload: [
+]
+
+swpreload_cdn: [
+  '/css/beer.min.css'
+  '/img/beercss.png'
+  '/js/beer.min.js'
+  '/js/material-dynamic-colors.min.js'
+]
