@@ -28,12 +28,12 @@ google: [
 #  UA: 'UA-xxx'
 ]
 
-# cache profiles
+# cache
 cache_profiles: [
   tenminutes: "+10 minutes"
 ]
 
-# Redis configuration
+# Redis
 redis: [
   port: 6377
   timeout: 1
@@ -56,10 +56,10 @@ l:
   noscript: 'Please enable JavaScript!<br>Without scripting enabled, this app is useless.'
   switch_design: '🔳🔲 design'
   text_date: 'build date:'
-  text_quota: 'API quota status:'
-  text_version: 'version:'
   text_login: 'login'
+  text_quota: 'API quota status:'
   text_settings: 'settings'
+  text_version: 'version:'
   theme_color: '#000'
   tit_appinfo: 'PWA Mini App'
   title: 'APP'

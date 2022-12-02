@@ -29,7 +29,7 @@
       var scrolled = (scroll / height) * 100;
       if (document.getElementById("progressbar")) document.getElementById("progressbar").style.width = scrolled + "%";
 
-      // fix top navigation and comm icon on touch enabled devices
+      // fix navigation and comm icon on touch enabled devices
       if (GSC.touch) {
         if (scroll > 100) {
           $("#top_nav").hide(150);
@@ -63,8 +63,7 @@
 
       // set active navigation
       function setNavigation(el) {
-        if (!el) return;
-        if (!$('.' + el)) return;
+        if (!el || !$('.' + el)) return;
 
         // scroll to the top
         window.scrollTo({
@@ -76,6 +75,7 @@
           GSC.modals.forEach(el => {
             $('#' + el).removeClass('active');
           });
+          GSC.modals = [];
         }
 
         // set UI
@@ -96,7 +96,7 @@
         }, 10)
       });
 
-      // app update
+      // update
       $('.nav_update').click(function () {
         if (GSC.offline) { // toast
           setTimeout(function () {
@@ -141,7 +141,7 @@
 
       // OTHER HANDLERS AND RUNTIME
 
-      // remove modals and toasts on every click
+      // remove modals and toasts on click
       $('.section,main,nav').click(function() {
         GSC.lastclick = +new Date();
         $('.toast').removeClass('active');
@@ -158,7 +158,13 @@
       // hide top section on main section click
       $('section').click(function() {
         $('.section').addClass('hidden');
-        $('nav i, nav div').removeClass();
+        $('nav i,nav div').removeClass();
+        if (GSC.modals.length) {
+          GSC.modals.forEach(el => {
+            $('#' + el).removeClass('active');
+          });
+          GSC.modals = [];
+        }
       });
 
       // process switches
