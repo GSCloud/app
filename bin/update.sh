@@ -14,7 +14,7 @@ info "Version: $VERSION Revisions: $REVISIONS"
 # cleaning
 rm -rf logs/* temp/*
 ln -s ../. www/cdn-assets/$VERSION >/dev/null 2>&1
-find www/cdn-assets/ -type l -mtime +30 -delete
+find www/cdn-assets/ -type l -mtime +90 -delete
 
 command -v composer >/dev/null 2>&1 || fail "PHP composer is not installed!"
 composer update --no-plugins --no-scripts
