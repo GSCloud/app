@@ -53,7 +53,7 @@ l:
   err_connection: 'Connection error!'
   keywords: 'app, gscloud.cz, rapid, development, template'
   no_cookies: 'This app does not use any 3rd party cookies.'
-  noscript: 'Please enable JavaScript!.'
+  noscript: 'Please enable JavaScript!<br>Without scripting enabled, this app is useless.'
   switch_design: '🔳🔲 design'
   text_date: 'build date:'
   text_quota: 'API quota status:'
