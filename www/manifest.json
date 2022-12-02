@@ -60,7 +60,7 @@
     "display": "standalone",
     "theme_color": "black",
     "background_color": "#000",
-    "lang": "cs",
+    "lang": "en",
     "mobileAppIOS": "true",
     "appleStatusBarStyle": "default"
 }
