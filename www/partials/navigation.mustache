@@ -1,15 +1,16 @@
 <!-- top navigation -->
-<nav id="top_nav" class="top hidden">
+<nav id="top_nav" class="top no-margin hidden">
   <a class="nav_app">
     <span class="badge circle left red bold white-text hidden">❕</span>
-    <img id="logo" class="square large"
-      src="{{ cdn }}/img/logo.png"/>
+    <img id="logo" class="square large" src="{{ cdn }}/img/logo.png"/>
   </a>
   <a class="nav_config">
     <i tabindex="-1" class="large" data-color="blue-text">build</i>
+    <div>{{ l.text_settings }}</div>
   </a>
   <a class="nav_user">
-    <i tabindex="-1" class="large" data-color="lime-text">face</i>
+    <i tabindex="-1" class="large" data-color="blue-text">login</i>
+    <div>{{ l.text_login }}</div>
   </a>
 </nav>
 
@@ -22,6 +23,7 @@
     function onscroll() {
       GSC.lastclick = +new Date();
       $('.toast').removeClass('active');
+
       var scroll = document.body.scrollTop || document.documentElement.scrollTop;
       var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       var scrolled = (scroll / height) * 100;
@@ -30,7 +32,7 @@
       // fix top navigation and comm icon on touch enabled devices
       if (GSC.touch) {
         if (scroll > 100) {
-          $("#top_nav").hide(250);
+          $("#top_nav").hide(150);
           $("#comm").css('top', 0);
         } else {
           $("#top_nav").show(100);
@@ -59,14 +61,15 @@
         }
       }
 
-      // set active navigation by element
+      // set active navigation
       function setNavigation(el) {
         if (!el) return;
         if (!$('.' + el)) return;
+
+        // scroll to the top
         window.scrollTo({
-          top: 0, left: 0
+          top: 0, left: 0, behavior: 'smooth'
         });
-        $('#avatar').removeClass('large');
 
         // remove modals
         if (GSC.modals.length) {
@@ -88,7 +91,6 @@
       $('.nav_app').click(function () {
         setTimeout(function() {
           $('#appinfo_modal').toggleClass('active');
-          $('#changelog_modal').removeClass('active');
           GSC.modals = [];
           GSC.modals.push('appinfo_modal');
         }, 10)
@@ -108,7 +110,7 @@
         }, 250);
       });
 
-      // go to API page
+      // go to API
       $('.nav_api').click(function() {
         if (GSC.offline) { // toast
           setTimeout(function () {
@@ -129,7 +131,6 @@
       $('.nav_user').click(function() {
         setNavigation(this.className);
         $('#user').removeClass('hidden');
-        $('#avatar').addClass('large');
       });
 
       // settings: UI
@@ -154,7 +155,7 @@
         }
       });
 
-      // click on main section
+      // hide top section on main section click
       $('section').click(function() {
         $('.section').addClass('hidden');
         $('nav i, nav div').removeClass();
@@ -171,7 +172,6 @@
       // set default classes
       $('.section').addClass('hidden');
       $('nav i, nav div').removeClass();
-
     });
   })(window, $);
 

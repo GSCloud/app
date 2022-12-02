@@ -58,9 +58,11 @@ l:
   text_date: 'build date:'
   text_quota: 'API quota status:'
   text_version: 'version:'
+  text_login: 'login'
+  text_settings: 'settings'
   theme_color: '#000'
-  tit_appinfo: 'App'
-  title: 'THE APP'
+  tit_appinfo: 'PWA Mini App'
+  title: 'APP'
   webshare_button: '<i>share</i>&nbsp;&nbsp;share'
 
 swpreload: [
