@@ -6,7 +6,7 @@
     <img id="logo" class="square large" src="{{ cdn }}/img/logo.png"/>
     </a>
   </span>
-  <h5 class="max">{{ l.tit_appinfo }}</h5>
+  <h6 class="max">{{ l.tit_appinfo }}</h6>
   <a class="nav_config">
     <i tabindex="-1" class="large" data-color="blue-text">build</i>
     <div>{{ l.text_settings }}</div>
@@ -181,8 +181,8 @@
 
       // set UI
       setUImode();
-      $('nav,body,#offline,.modal,.toast,section').removeClass('hidden');
-      $('nav,body,section').hide().show(350);
+      $('nav,#offline,#comm,.modal,.toast,section').removeClass('hidden');
+      $('nav,body,section').hide().fadeIn(350);
 
       // set default classes
       $('.section').addClass('hidden');
