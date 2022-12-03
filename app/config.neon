@@ -39,11 +39,11 @@ redis: [
   timeout: 1
 ]
 
-# data
+# extra data
 data: [
 ]
 
-# locale
+# locales
 lang: en
 l:
   author: 'Fred Brooker @ GS Cloud Ltd. 2022'
@@ -66,9 +66,11 @@ l:
   title: 'APP'
   webshare_button: '<i>share</i>&nbsp;&nbsp;share'
 
+# ServiceWorker preload
 swpreload: [
 ]
 
+# ServiceWorker preload with CDN link
 swpreload_cdn: [
   '/css/beer.min.css'
   '/img/beercss.png'

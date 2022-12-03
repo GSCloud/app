@@ -67,7 +67,7 @@ class ApiPresenter extends APresenter
         // general API properties
         $extras = [
             "fn" => $view,
-            "name" => "APP REST API",
+            "name" => "REST API",
             "api_quota" => (int) self::MAX_API_HITS,
             "api_usage" => $this->accessLimiter(),
             "access_time_limit" => self::ACCESS_TIME_LIMIT,
