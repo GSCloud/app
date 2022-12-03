@@ -88,7 +88,6 @@
 </div>
 
 <h1 class="hidden">{{ l.tit_appinfo }}</h1>
-
 <section class="hidden">
   <img src="{{cdn}}/img/app-scheme.webp" alt="App Scheme" class="responsive white">
   {{>content}}
@@ -131,11 +130,10 @@
             console.log(e.target.id);
         }
       }
-      if (location.protocol == 'http:') return true; // true = enable context menu on localhost
+      // true = enable context menu on localhost
+      if (location.protocol == 'http:') return true;
       return false; // false = prevent context menu
     }
-
-    // *** GSC FUNCTIONS ***
 
     // GSC.ComOn() - communication icon fade-in = ON
     if (typeof GSC.ComOn !== 'function') GSC.ComOn = function() {
