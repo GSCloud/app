@@ -94,8 +94,6 @@
         $('.' + el + '>div').addClass($('.' + el + '>i').data('color')).addClass('bold');
       }
 
-      // NAVIGATION CLICK HANDLERS
-
       // logo
       $('.nav_app').click(function () {
         setTimeout(function() {
@@ -148,8 +146,6 @@
         setUImode();
       });
 
-      // OTHER HANDLERS AND RUNTIME
-
       // remove modals and toasts on click
       $('.section,main,nav').click(function() {
         GSC.lastclick = +new Date();
@@ -181,13 +177,14 @@
 
       // set UI
       setUImode();
-      $('nav,#offline,#comm,.modal,.toast,section').removeClass('hidden');
-      $('nav,body,section').hide().fadeIn(350);
 
-      // set default classes
+      // set navigation
       $('.section').addClass('hidden');
       $('nav i, nav div').removeClass();
 
+      // fade-in UI
+      $('nav,#offline,#comm,.modal,.toast,section').removeClass('hidden');
+      $('nav,body,section').hide().fadeIn(350);
     });
   })(window, $);
 
