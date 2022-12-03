@@ -6,3 +6,4 @@ home:
   path: /
   presenter: app
   sitemap: true
+  cached: true
