@@ -60,6 +60,7 @@ l:
   text_quota: 'API quota status:'
   text_settings: 'settings'
   text_version: 'version:'
+  text_user: 'user'
   theme_color: '#000'
   tit_appinfo: 'PWA Mini App'
   title: 'APP'

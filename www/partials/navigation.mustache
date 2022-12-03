@@ -12,8 +12,14 @@
     <div>{{ l.text_settings }}</div>
   </a>
   <a class="nav_user">
+{{#user.id}}
+    <i tabindex="-1" class="large" data-color="blue-text">face</i>
+    <div>{{ l.text_user }}</div>
+{{/user.id}}
+{{^user.id}}
     <i tabindex="-1" class="large" data-color="blue-text">login</i>
     <div>{{ l.text_login }}</div>
+{{/user.id}}
   </a>
 </nav>
 
