@@ -1,12 +1,12 @@
 <!-- top navigation -->
 <nav id="top_nav" class="top no-margin hidden">
   <span class="max">
-    <span class="badge circle bottom red bold white-text little-padding hidden">❕</span>
+    <span class="badge circle bottom red bold white-text padding hidden">NEW</span>
     <a class="nav_app">
     <img id="logo" class="square large" src="{{ cdn }}/img/logo.png"/>
     </a>
   </span>
-  <h3 class="max">{{ l.title }}</h3>
+  <h5 class="max">{{ l.tit_appinfo }}</h5>
   <a class="nav_config">
     <i tabindex="-1" class="large" data-color="blue-text">build</i>
     <div>{{ l.text_settings }}</div>
@@ -125,13 +125,13 @@
       // config
       $('.nav_config').click(function() {
         setNavigation(this.className);
-        $('#config').removeClass('hidden');
+        $('#config').hide().removeClass('hidden').fadeIn(200);
       });
       
       // user
       $('.nav_user').click(function() {
         setNavigation(this.className);
-        $('#user').removeClass('hidden');
+        $('#user').hide().removeClass('hidden').fadeIn(200);
       });
 
       // settings: UI
