@@ -1,6 +1,6 @@
-### THE APP
+### PWA MINI APP
 
-# uncomment to force debugger !!!
+# Tracy debugger
 #dbg: TRUE
 dbg: FALSE
 
@@ -23,17 +23,12 @@ goauth_redirect: 'https://app.gscloud.cz/login'
 local_goauth_origin: 'http://localhost:8014'
 local_goauth_redirect: 'http://localhost:8014/login'
 
-# Google properties
-google: [
-#  UA: 'UA-xxx'
-]
-
-# cache
+# cache profiles
 cache_profiles: [
   tenminutes: "+10 minutes"
 ]
 
-# Redis
+# Redis server configuration
 redis: [
   port: 6377
   timeout: 1
@@ -59,18 +54,18 @@ l:
   text_login: 'login'
   text_quota: 'API quota status:'
   text_settings: 'settings'
-  text_version: 'version:'
   text_user: 'user'
+  text_version: 'version:'
   theme_color: '#000'
-  tit_appinfo: 'PWA Mini App'
+  tit_appinfo: 'PWA MINI App'
   title: 'APP'
   webshare_button: '<i>share</i>&nbsp;&nbsp;share'
 
-# ServiceWorker preload
+# Service Worker preload
 swpreload: [
 ]
 
-# ServiceWorker preload with CDN link
+# Service Worker preload, CDN links
 swpreload_cdn: [
   '/css/beer.min.css'
   '/img/beercss.png'
