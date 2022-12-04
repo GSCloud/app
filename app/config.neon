@@ -48,7 +48,7 @@ lang: en
 l:
   author: 'Fred Brooker @ GS Cloud Ltd. 2022'
   but_api: '<i>settings_input_component</i>&nbsp;&nbsp;REST API'
-  but_update: 'UPDATE THE APP'
+  but_update: 'UPDATE!'
   description: 'Rapid PWA development application template.'
   err_connection: 'Connection error!'
   keywords: 'app, gscloud.cz, rapid, development, template'
