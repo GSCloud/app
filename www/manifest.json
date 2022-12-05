@@ -1,7 +1,7 @@
 {
     "name": "APP",
     "short_name": "APP",
-    "description": "PWA APP development",
+    "description": "PWA MINI App",
     "icons": [{
             "src": "/img/favicon-64.webp",
             "type": "image/webp",
@@ -55,12 +55,13 @@
             "sizes": "512x512"
         }
     ],
-    "scope": "/",
-    "start_url": "/",
-    "display": "standalone",
-    "theme_color": "black",
+    "appleStatusBarStyle": "default",
     "background_color": "#000",
+    "display": "standalone",
+    "id": "/",
     "lang": "en",
     "mobileAppIOS": "true",
-    "appleStatusBarStyle": "default"
+    "scope": "/",
+    "start_url": "/",
+    "theme_color": "black"
 }
