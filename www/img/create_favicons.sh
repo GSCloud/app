@@ -4,8 +4,6 @@
 ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
 cd $ABSDIR
-pwd
-exit 
 
 INPUT="$1"
 OUT_DIR="$2"
