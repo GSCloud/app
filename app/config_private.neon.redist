@@ -1,5 +1,8 @@
-### XXX APP
+### PWA MINI APP
 ### PRIVATE CONFIGURATION
+### Fred Brooker <git@gscloud.cz>
+### @license MIT https://gscloud.cz/LICENSE
+### @link https://app.gscloud.cz
 
 # cookie: tracy-debug
 #DEBUG_COOKIE: "1234"
