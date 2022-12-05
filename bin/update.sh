@@ -25,7 +25,7 @@ if [ -f "gulpfile.js" ]; then
 fi
 
 # favicons recalculation
-cd www/img && . ./create_favicons.sh
+www/img/create_favicons.sh
 
 # CRLF normalization
 git add --renormalize .
