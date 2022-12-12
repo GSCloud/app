@@ -1,5 +1,6 @@
-#CSP Headers
 #@author Fred Brooker <git@gscloud.cz>
+
+#CSP Headers
 
 csp: [
     "Content-Security-Policy: "

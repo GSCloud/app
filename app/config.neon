@@ -46,10 +46,10 @@ lang: en
 l:
   author: 'Fred Brooker @ GS Cloud Ltd. 2022'
   but_api: '<i>settings_input_component</i>&nbsp;&nbsp;REST API'
-  but_update: 'UPDATE!'
-  description: 'Rapid PWA development application template.'
+  but_update: 'UPDATE THE APP'
+  description: 'Rapid PWA development application template in jQuery, PHP OOP and Mustache.'
   err_connection: 'Connection error!'
-  keywords: 'app, gscloud.cz, rapid, development, template'
+  keywords: 'app, PWA, gscloud.cz, rapid, development, template, PHP, Mustache, jQuery'
   no_cookies: 'This app does not use any 3rd party cookies.'
   noscript: 'Please enable JavaScript!<br>Without scripting enabled, this app is useless.'
   switch_design: '🔳🔲 design'
