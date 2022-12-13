@@ -1,17 +1,17 @@
 <!-- top navigation -->
 <nav id="top_nav" class="top no-margin hidden">
   <span class="max">
-    <span class="badge circle bottom red bold white-text padding hidden">NEW</span>
-    <a class="nav_app">
-    <img id="logo" class="square large" src="{{ cdn }}/img/logo.png"/>
+    <span class="badge circle bottom red bold white-text padding hidden">{{ l.text_new }}</span>
+    <a class="nav_app" rel="nofollow">
+    <img id="logo" alt="logo" class="square large" src="{{ cdn }}/img/logo.png"/>
     </a>
   </span>
   <h6 class="max">{{ l.tit_appinfo }}</h6>
-  <a class="nav_config">
+  <a class="nav_config" rel="nofollow">
     <i tabindex="-1" class="large" data-color="blue-text">build</i>
     <div>{{ l.text_settings }}</div>
   </a>
-  <a class="nav_user">
+  <a class="nav_user" rel="nofollow">
 {{#user.id}}
     <i tabindex="-1" class="large" data-color="blue-text">face</i>
     <div>{{ l.text_user }}</div>
