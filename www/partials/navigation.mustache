@@ -2,16 +2,16 @@
 <nav id="top_nav" class="top no-margin hidden">
   <span class="max">
     <span class="badge circle bottom red bold white-text padding hidden">{{ l.text_new }}</span>
-    <a class="nav_app" rel="nofollow">
+    <span class="nav_app hover padding" rel="nofollow">
     <img id="logo" alt="logo" class="square large" src="{{ cdn }}/img/logo.webp"/>
-    </a>
+    </span>
   </span>
   <h6 class="max">{{ l.tit_appinfo }}</h6>
-  <a class="nav_config" rel="nofollow">
+  <span class="nav_config hover padding" rel="nofollow">
     <i tabindex="-1" class="large" data-color="blue-text">build</i>
     <div>{{ l.text_settings }}</div>
-  </a>
-  <a class="nav_user" rel="nofollow">
+  </span>
+  <span class="nav_user hover padding" rel="nofollow">
 {{#user.id}}
     <i tabindex="-1" class="large" data-color="blue-text">face</i>
     <div>{{ l.text_user }}</div>
@@ -20,7 +20,7 @@
     <i tabindex="-1" class="large" data-color="blue-text">login</i>
     <div>{{ l.text_login }}</div>
 {{/user.id}}
-  </a>
+  </span>
 </nav>
 
 <script>
