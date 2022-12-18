@@ -1,13 +1,13 @@
 <?php
 /**
  * GSC Tesseract
- * php version 7.4
+ * php version 8.2
  *
  * @category CMS
  * @package  Framework
  * @author   Fred Brooker <git@gscloud.cz>
  * @license  MIT https://gscloud.cz/LICENSE
- * @link     https://lasagna.gscloud.cz
+ * @link     https://app.gscloud.cz
  */
 
 namespace GSC;

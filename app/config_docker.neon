@@ -16,7 +16,7 @@ minify: TRUE
 
 # CORE
 app: lasagna
-canonical_url: "https://dockerlasagna.gscloud.cz/"
+canonical_url: "https://app.gscloud.cz/"
 date_default_timezone: "Europe/Prague"
 project: DOCKERLASAGNA
 secret_cookie_key: secure.key
@@ -26,8 +26,8 @@ version: v1
 #gcp_project_id: "gscloudcz-163314"
 
 # Google OAuth 2.0
-goauth_origin: "https://dockerlasagna.gscloud.cz"
-goauth_redirect: "https://dockerlasagna.gscloud.cz/login"
+goauth_origin: "https://app.gscloud.cz"
+goauth_redirect: "https://app.gscloud.cz/login"
 local_goauth_origin: "http://localhost:9000"
 local_goauth_redirect: "http://localhost:9000/login"
 
@@ -67,7 +67,7 @@ redis: [
 
 multisite_profiles: [
   default: [
-    dockerlasagna.gscloud.cz
+    app.gscloud.cz
   ]
 ]
 
