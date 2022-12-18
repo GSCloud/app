@@ -4,8 +4,8 @@
 ### @link https://app.gscloud.cz
 
 # Tracy debugger
-#dbg: TRUE
-dbg: FALSE
+dbg: TRUE
+#dbg: FALSE
 
 # CORE
 app: app
