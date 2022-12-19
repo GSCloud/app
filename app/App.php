@@ -13,8 +13,6 @@
 namespace GSC;
 
 use Cake\Cache\Cache;
-use Google\Cloud\Logging\LoggingClient;
-use Monolog\Logger;
 use Nette\Neon\Neon;
 
 // SANITY CHECK
@@ -25,8 +23,7 @@ foreach ([
     "DS",
     "LOGS",
     "ROOT",
-    "TEMP",
-    "ENABLE_CSV_CACHE",
+    "TEMP"
 ] as $x) {
     defined($x) || die("FATAL ERROR: sanity check for constant '$x' failed!");
 }
@@ -34,21 +31,23 @@ foreach ([
 /**
  * Exception handler
  *
- * @param int    $severity severity level
- * @param string $message  message
- * @param int    $file     file
- * @param int    $line     line
- *
- * @return void
+ * @param int    $errno   error code
+ * @param string $errstr  error message
+ * @param string $errfile file name
+ * @param int    $errline line number
+ * 
+ * @return bool
  */
-function exceptionErrorHandler($severity, $message, $file, $line)
+function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
 {
-    if (!(error_reporting() & $severity)) {
+    if (!(error_reporting() & $errno)) {
         // this error code is not included in error_reporting
-        return;
+        return false;
     }
-    throw new \Exception("ERROR: $message FILE: $file LINE: $line");
+    $errstr = htmlspecialchars($errstr);
+    throw new \Exception("ERROR: $errstr FILE: $errfile LINE: $errline");
 }
+
 set_error_handler("\\GSC\\exceptionErrorHandler");
 
 // POPULATE DATA ARRAY
@@ -65,17 +64,17 @@ $data["POST"] = array_map("htmlspecialchars", $_POST);
 $data["DATA_VERSION"] = null;
 $data["PHP_VERSION"] = PHP_VERSION_ID;
 $data["VERSION"] = $version = trim(
-    @file_get_contents(ROOT . DS . "VERSION") ?? "", "\r\n"
+    @file_get_contents(ROOT . DS . "VERSION") ?: '', "\r\n"
 );
 $data["VERSION_SHORT"] = $base58->encode(
     base_convert(substr(hash("sha256", $version), 0, 4), 16, 10)
 );
 $data["VERSION_DATE"]
-    = date("j. n. Y G:i", @filemtime(ROOT . DS . "VERSION") ?? time());
+    = date("j. n. Y G:i", filemtime(ROOT . DS . "VERSION") ?: time());
 $data["VERSION_TIMESTAMP"]
-    = @filemtime(ROOT . DS . "VERSION") ?? time();
+    = filemtime(ROOT . DS . "VERSION") ?: time();
 $data["REVISIONS"] = (int) trim(
-    @file_get_contents(ROOT . DS . "REVISIONS") ?? "0", "\r\n"
+    file_get_contents(ROOT . DS . "REVISIONS") ?: '0', "\r\n"
 );
 $data["cdn"] = $data["CDN"] = DS . "cdn-assets" . DS . $version;
 $data["host"] = $data["HOST"] = $host = $_SERVER["HTTP_HOST"] ?? "";
@@ -84,7 +83,7 @@ $data["base"] = $data["BASE"] = $host ? (
     ) : "";
 $data["request_uri"] = $_SERVER["REQUEST_URI"] ?? "";
 $data["request_path"] = $rqp = trim(
-    trim(strtok($_SERVER["REQUEST_URI"] ?? "", "?&"), "/")
+    trim(strtok($_SERVER["REQUEST_URI"] ?? "", "?&") ?: '', "/")
 );
 $data["request_path_hash"] = ($rqp == "") ? "" : hash("sha256", $rqp);
 
@@ -123,50 +122,6 @@ defined("SERVER") || define(
 );
 defined("PROJECT") || define("PROJECT", (string) ($cfg["project"] ?? "LASAGNA"));
 defined("APPNAME") || define("APPNAME", (string) ($cfg["app"] ?? "app"));
-defined("MONOLOG") || define(
-    "MONOLOG", LOGS . DS . "MONOLOG_" . SERVER . "_" . PROJECT . ".log"
-);
-defined("GCP_PROJECTID") || define("GCP_PROJECTID", $cfg["gcp_project_id"] ?? null);
-defined("GCP_KEYS") || define("GCP_KEYS", $cfg["gcp_keys"] ?? null);
-
-// set GCP_KEYS ENV variable
-if (GCP_KEYS && file_exists(APP . DS . GCP_KEYS)) {
-    putenv("GOOGLE_APPLICATION_CREDENTIALS=" . APP . DS . GCP_KEYS);
-}
-
-/**
- * Google Stackdriver logger
- *
- * @param string $message  message
- * @param mixed  $severity severity
- *
- * @return mixed
- */
-function logger($message, $severity = Logger::INFO)
-{
-    if (empty($message) || is_null(GCP_PROJECTID) || is_null(GCP_KEYS)) {
-        return false;
-    }
-    if (ob_get_level()) {
-        ob_end_clean();
-    }
-    try {
-        $logging = new LoggingClient(
-            [
-                "projectId" => GCP_PROJECTID,
-                "keyFilePath" => APP . DS . GCP_KEYS,
-            ]
-        );
-        $stack = $logging->logger(PROJECT);
-        $stack->write(
-            DOMAIN . " " . $stack->entry($message), [
-                "severity" => $severity,
-            ]
-        );
-    } finally {
-    }
-    return true;
-}
 
 // CACHING PROFILES
 $cache_profiles = array_replace(
@@ -258,7 +213,7 @@ $multisite_profiles = array_replace(
                         $cfg["canonical_url"] ?? ""
                         )
                     ), "/"
-                ) ?? DOMAIN
+                ) ?: DOMAIN
             )
         ],
     ], (array) ($cfg["multisite_profiles"] ?? [])
@@ -299,21 +254,25 @@ $routes = $cfg["routes"] ?? [ // can be overriden in config.neon
 foreach ($routes as $r) {
     $r = APP . DS . $r;
     if (($content = @file_get_contents($r)) === false) {
-        logger("ERROR in routing table: $r", Logger::EMERGENCY);
         if (ob_get_level()) {
             ob_end_clean();
         }
         header("HTTP/1.1 500 Internal Server Error");
         echo "<h1>Server Error</h1><h2>Routing table</h2><h3>$r</h3>";
-        exit;
+        exit(1);
     }
-    $router = array_replace_recursive($router, @Neon::decode($content));
+    if ($content) {
+        $router_add = Neon::decode($content);
+        if (is_array($router_add)) {
+            $router = array_replace_recursive($router, $router_add);
+        }
+    }
 }
 
 // SET ROUTING DEFAULTS AND PROPERTIES
 $presenter = [];
 $defaults = $router["defaults"] ?? [];
-foreach ($router ?? [] as $k => $v) {
+foreach ($router as $k => $v) {
     if ($k == "defaults") {
         continue;
     }
@@ -374,6 +333,7 @@ $data["presenter"] = $presenter;
 $data["router"] = $router;
 
 // CLI HANDLER
+// @codingStandardsIgnoreStart
 if (CLI) {
     define("TESSERACT_END", microtime(true));
 
@@ -381,18 +341,23 @@ if (CLI) {
         @ob_end_clean();
     }
     if (isset($argv[1])) {
+        /** @phpstan-ignore-next-line */
         CliPresenter::getInstance()->setData($data)->selectModule(
             $argv[1], $argc, $argv
         );
         exit;
     }
+    /** @phpstan-ignore-next-line */
     CliPresenter::getInstance()->setData($data)->process()->help();
     exit;
 }
+// @codingStandardsIgnoreEnd
+
 
 // PROCESS ROUTING
 $match = $alto->match();
-$view = $match ? $match["target"] : ($router["defaults"]["view"] ?? "home");
+$target = $match["target"] ?? ($router["defaults"]["view"] ?? "home");
+$view = $match ? $target : ($router["defaults"]["view"] ?? "home");
 
 // POPULATE DATA ARRAY
 $data["match"] = $match;
@@ -436,24 +401,15 @@ case "epub": // skip CSP for EPUB reader
 
 default: // set CSP HEADER
     if (file_exists(CSP) && is_readable(CSP)) {
-        $csp = @Neon::decode(@file_get_contents(CSP));
-        header(implode(" ", (array) $csp["csp"]));
+        $csp_content = file_get_contents(CSP);
+        if ($csp_content) {
+            $csp = Neon::decode($csp_content);
+            if (is_array($csp)) {
+                header(implode(" ", (array) $csp["csp"]));
+            }
+        }
     }
 }
-
-// POPULATE GLOBAL CSV CACHE
-$arr = [];
-if (ENABLE_CSV_CACHE && \is_array($locales = $data["locales"] ?? null)) {
-    foreach (array_replace($locales, $data["app_data"] ?? []) as $name => $csvkey) {
-        $arr[hash("sha256", $name)] = [
-            "name" => $name,
-            "sheet" => $csvkey,
-            "data" => null,
-        ];
-    }
-}
-$data["csvcache"] = $arr;
-unset($arr);
 
 // GEO BLOCKING
 // use XX to block unknown locations
@@ -489,16 +445,12 @@ header("X-Country: $country");
 header("X-Running: $time1 ms");
 header("X-Processing: $time2 ms");
 
-// SEND ANALYTICS
-//$events = null;
-if (method_exists($app, "SendAnalytics")) {
-    $app->setData($data)->SendAnalytics();
-}
-
 // EXPORT OUTPUT
 echo $data["output"] ?? "";
 
 // PROCESS DEBUGGING
+// @codingStandardsIgnoreStart
+/** @phpstan-ignore-next-line */
 if (DEBUG) {
     define("TESSERACT_END", microtime(true));
 
@@ -507,8 +459,10 @@ if (DEBUG) {
     unset($data["goauth_secret"]);
 
     // dumps
+    /** @phpstan-ignore-next-line */
     bdump($app->getIdentity(), "identity");
+    /** @phpstan-ignore-next-line */
     bdump($data, 'model');
 }
-
+// @codingStandardsIgnoreEnd
 exit(0);
