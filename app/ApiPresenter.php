@@ -3,8 +3,8 @@
  * GSC Tesseract
  * php version 8.2
  *
- * @category Framework
- * @package  Tesseract
+ * @category CMS
+ * @package  Framework
  * @author   Fred Brooker <git@gscloud.cz>
  * @license  MIT https://gscloud.cz/LICENSE
  * @link     https://app.gscloud.cz
@@ -19,8 +19,8 @@ use RedisClient\RedisClient;
 /**
  * API Presenter
  * 
- * @category Framework
- * @package  Tesseract
+ * @category CMS
+ * @package  Framework
  * @author   Fred Brooker <git@gscloud.cz>
  * @license  MIT https://gscloud.cz/LICENSE
  * @link     https://app.gscloud.cz

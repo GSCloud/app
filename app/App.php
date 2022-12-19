@@ -27,7 +27,6 @@ foreach ([
 ] as $x) {
     defined($x) || die("FATAL ERROR: sanity check for constant '$x' failed!");
 }
-
 defined('DEBUG') || define('DEBUG', false);
 
 /**

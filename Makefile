@@ -77,7 +77,7 @@ sync:
 
 test: unit
 ifneq ($(strip $(has_phpstan)),)
-	@phpstan -l9 analyse www/index.php ./Bootstrap.php ./app/App.php
+	@phpstan -l9 analyse www/index.php Bootstrap.php app/App.php app/Doctor.php
 endif
 	@bash ./cli.sh local
 
