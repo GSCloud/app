@@ -7,7 +7,7 @@
  * @package  Framework
  * @author   Fred Brooker <git@gscloud.cz>
  * @license  MIT https://gscloud.cz/LICENSE
- * @link     https://app.gscloud.cz
+ * @link     https://mini.gscloud.cz
  */
 
 declare (strict_types = 1);
