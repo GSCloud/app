@@ -1,13 +1,11 @@
 {
-    "name": "gscloud/tesseractlasagna",
-    "description": "Tesseract LASAGNA",
+    "name": "gscloud/tesseractapp",
+    "description": "Tesseract App",
     "require": {
         "adbario/php-dot-notation": "^3",
         "altorouter/altorouter": "^1",
         "cakephp/cache": "^4",
         "cheprasov/php-redis-client": "^1",
-        "google/cloud": "^0",
-        "guzzlehttp/guzzle": "^7",
         "league/climate": "^3",
         "league/csv": "^9",
         "league/oauth2-client": "^2",
