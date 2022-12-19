@@ -28,6 +28,8 @@ foreach ([
     defined($x) || die("FATAL ERROR: sanity check for constant '$x' failed!");
 }
 
+defined('DEBUG') || define('DEBUG', false);
+
 /**
  * Exception handler
  *
@@ -352,7 +354,6 @@ if (CLI) {
     exit;
 }
 // @codingStandardsIgnoreEnd
-
 
 // PROCESS ROUTING
 $match = $alto->match();
