@@ -73,7 +73,7 @@ interface IPresenter
     public function renderHTML($template); // UT
     public function writeJsonData($data, $headers = [], $switches = null);
 
-    public function process(); // abstract method
+    public function process($param); // abstract method
 
     public static function getInstance(); // UT
     public static function getTestInstance(); // for testing purposes only
@@ -274,7 +274,7 @@ abstract class APresenter implements IPresenter
      * @abstract
      * @return   self
      */
-    abstract public function process();
+    abstract public function process($param = null);
 
     /**
      * Class constructor
@@ -1562,7 +1562,7 @@ abstract class APresenter implements IPresenter
     /**
      * Write JSON data to output
      *
-     * @param  array $data     integer error code / array of data
+     * @param  mixed $data     integer error code / array of data
      * @param  array $headers  array of extra data (optional)
      * @param  mixed $switches JSON encoder switches
      * @return self
