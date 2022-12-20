@@ -37,9 +37,11 @@ class ApiPresenter extends APresenter
     /**
      * Main controller
      * 
-     * @return self
+     * @param mixed $param optional parameter
+     * 
+     * @return object the controller
      */
-    public function process()
+    public function process($param = null)
     {
         \setlocale(LC_ALL, 'cs_CZ.UTF-8');
         \error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
@@ -51,27 +53,46 @@ class ApiPresenter extends APresenter
 
         // view properties
         $presenter = $this->getPresenter();
-        $use_key = $presenter[$view]["use_key"] ?? false;
-        $allow_key = $presenter[$view]["allow_key"] ?? false;
-        $priv = $presenter[$view]["private"] ?? false;
+        $use_key = false;
+        if (is_array($presenter)) {
+            $use_key = \array_key_exists('use_key', $presenter[$view])
+                ? $presenter[$view]['use_key'] : false;
+        }
+        $allow_key = false;
+        if (is_array($presenter)) {
+            $allow_key = \array_key_exists('allow_key', $presenter[$view])
+                ? $presenter[$view]['allow_key'] : false;
+        }
+        $priv = false;
+        if (is_array($presenter)) {
+            $priv = \array_key_exists('private', $presenter[$view])
+                ? $presenter[$view]['private'] : false;
+        }
 
         // user data, permissions and authorizations
-        $api_key = $_GET["apikey"] ?? null;
-        $d["user"] = $this->getCurrentUser() ?? [];
-        $user_id = $d["user"]["id"] ?? null;
-        $d["admin"] = $user_group = $this->getUserGroup();
-        if ($user_group) {
-            $d["admin_group_{$user_group}"] = true;
+        $api_key = $_GET['apikey'] ?? null;
+        $user_id = null;
+        $user_group = null;
+        if (is_array($d)) {
+            $d['user'] = $this->getCurrentUser();
+            $user_id = $d['user']['id'] ?? null;
+            $d['admin'] = $user_group = $this->getUserGroup();
+            if ($user_group) {
+                $d["admin_group_{$user_group}"] = true;
+            }
         }
 
         // general API properties
+        $cache_profiles = (array) ($this->getData("cache_profiles") ?: []);
+        $cache_time_limit = array_key_exists(self::API_CACHE, $cache_profiles)
+            ? $cache_profiles[self::API_CACHE] : null;
         $extras = [
             "fn" => $view,
             "name" => "REST API",
             "api_quota" => (int) self::MAX_API_HITS,
             "api_usage" => $this->accessLimiter(),
             "access_time_limit" => self::ACCESS_TIME_LIMIT,
-            "cache_time_limit" => $this->getData("cache_profiles")[self::API_CACHE],
+            "cache_time_limit" => $cache_time_limit,
             "cached" => false,
             "records_quota" => self::MAX_RECORDS,
             "private" => $priv,
@@ -86,7 +107,7 @@ class ApiPresenter extends APresenter
         }
 
         // PRIVATE && OAUTH2 && NOT ALLOWED
-        if ($priv && $user_id && !$user_group) {
+        if ($priv && $user_id > 0 && !$user_group) {
             return $this->writeJsonData(401, $extras);
         }
 
@@ -98,13 +119,11 @@ class ApiPresenter extends APresenter
                 "version" => $this->getData('VERSION'),
             ];
             return $this->writeJsonData($data, $extras);
-            break;
 
         default:
             sleep(5);
             return ErrorPresenter::getInstance()->process(404);
         }
-        return $this;
     }
 
     /**
@@ -114,9 +133,18 @@ class ApiPresenter extends APresenter
      */
     public function accessLimiter()
     {
-        $hour = date("H");
+        $hour = date('H');
         $uid = $this->getUID();
-        $key = "access_limiter_" . SERVER . "_" . PROJECT . "_{$hour}_{$uid}";
+        defined('SERVER') || define(
+            'SERVER',
+            strtolower(
+                preg_replace(
+                    "/[^A-Za-z0-9]/", '', $_SERVER['SERVER_NAME'] ?? 'localhost'
+                )
+            )
+        );
+        defined('PROJECT') || define('PROJECT', 'LASAGNA');
+        $key = 'access_limiter_' . SERVER . '_' . PROJECT . "_{$hour}_{$uid}";
         \error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
         $redis = new RedisClient(
             [
@@ -131,7 +159,7 @@ class ApiPresenter extends APresenter
         }
         if ($val > self::MAX_API_HITS) {
             // over limit!
-            $this->setLocation("/err/420");
+            $this->setLocation('/err/420');
         }
         try {
             @$redis->multi();

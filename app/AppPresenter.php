@@ -28,10 +28,12 @@ class AppPresenter extends APresenter
 {
     /**
      * Main controller
+     * 
+     * @param mixed $param optional parameter
      *
-     * @return self
+     * @return object Controller
      */
-    public function process()
+    public function process($param = null)
     {
         // basic setup
         $data = $this->getData();
@@ -39,11 +41,16 @@ class AppPresenter extends APresenter
         $view = $this->getView();
         $this->checkRateLimit()->setHeaderHtml()->dataExpander($data);
 
-        // process output
-        $output = $this->setData($data)->renderHTML($presenter[$view]["template"]);
-        StringFilters::trim_html_comment($output);
-        header("X-Cached: false");
+        // process template
+        $template = 'app';
+        if (\is_string($view) && \is_array($presenter)) {
+            $template = array_key_exists("template", $presenter[$view])
+                ? $presenter[$view]["template"] : 'app';
+        }
 
+        // process output
+        $output = $this->setData($data)->renderHTML($template);
+        StringFilters::trim_html_comment($output);
         return $this->setData("output", $output);
     }
 }

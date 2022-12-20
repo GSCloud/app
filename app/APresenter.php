@@ -864,7 +864,8 @@ abstract class APresenter implements IPresenter
     /**
      * Cfg getter
      *
-     * @param  string $key Index to configuration data / void
+     * @param string $key Index to configuration data / void
+     * 
      * @return mixed Configuration data by index / whole array
      */
     public function getCfg($key = null)
