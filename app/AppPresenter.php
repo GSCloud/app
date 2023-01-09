@@ -1,7 +1,7 @@
 <?php
 /**
  * GSC Tesseract
- * php version 7.4.0
+ * php version 8.2
  *
  * @category Framework
  * @package  Tesseract
@@ -16,7 +16,7 @@ use Cake\Cache\Cache;
 use Michelf\MarkdownExtra;
 
 /**
- * Mini Presenter
+ * App Presenter
  *
  * @category Framework
  * @package  Tesseract
@@ -35,7 +35,7 @@ class AppPresenter extends APresenter
      */
     public function process($param = null)
     {
-        // basic setup
+        // setup
         $data = $this->getData();
         $presenter = $this->getPresenter();
         $view = $this->getView();
