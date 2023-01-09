@@ -1,4 +1,4 @@
-### PWA MINI APP
+### PWA APP
 ### Fred Brooker <git@gscloud.cz>
 ### @license MIT https://gscloud.cz/LICENSE
 ### @link https://app.gscloud.cz
@@ -41,7 +41,7 @@ data: [
 # locales
 lang: en
 l:
-  author: 'Fred Brooker @ GS Cloud Ltd. 2022'
+  author: 'Fred Brooker @ GS Cloud Ltd. 2022-2023'
   but_api: '<i>settings_input_component</i>&nbsp;&nbsp;REST API'
   but_update: 'UPDATE'
   description: 'Rapid PWA development application template in jQuery, PHP OOP and Mustache.'
@@ -58,8 +58,8 @@ l:
   text_user: 'user'
   text_version: 'version:'
   theme_color: '#000'
-  tit_appinfo: 'PWA MINI App'
-  title: 'PWA MINI App'
+  tit_appinfo: 'MINI'
+  title: 'PWA Mini App'
   webshare_button: '<i>share</i>&nbsp;&nbsp;share'
 
 # Service Worker preload
@@ -68,8 +68,7 @@ swpreload: [
 
 # Service Worker preload, CDN links
 swpreload_cdn: [
-  '/css/beer.min.css'
-  '/img/beercss.png'
+  '/img/beercss.webp'
   '/js/beer.min.js'
   '/js/material-dynamic-colors.min.js'
 ]
