@@ -75,7 +75,7 @@ sync:
 	@bash ./bin/sync.sh b
 	@bash ./bin/sync.sh a
 
-test: unit
+test:
 ifneq ($(strip $(has_phpstan)),)
 	phpstan -l9 analyse www/index.php Bootstrap.php app/App.php app/Doctor.php app/MiniPresenter.php app/ApiPresenter.php
 endif

@@ -58,7 +58,6 @@ rsync -ahz --progress --delete-after --delay-updates --exclude "www/upload" --ex
   bin \
   cli.sh \
   composer.lock \
-  doc \
   remote_fixer.sh \
   vendor \
   www \
