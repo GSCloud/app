@@ -459,9 +459,7 @@ if (DEBUG) {
     unset($data['goauth_secret']);
 
     // dumps
-    /** @phpstan-ignore-next-line */
     bdump($app->getIdentity(), 'identity');
-    /** @phpstan-ignore-next-line */
     bdump($data, 'model');
 }
 // @codingStandardsIgnoreEnd
