@@ -1,0 +1,144 @@
+<script>
+'use strict';
+
+// trim polyfill
+String.prototype.trim||(String.prototype.trim=function(){return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,"")});
+
+// create UUID
+var uuid = null;
+try {
+  uuid = crypto.randomUUID();
+} catch (e) {
+  uuid = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,
+      c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+if (localStorage) {
+  localStorage['uuid'] = uuid;
+}
+
+// parseBool()
+function parseBool(val) {
+  return val === true || val === "true";
+}
+
+// compute SHA-256 hash of a string
+async function sha256(message) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hash;
+}
+
+(function (w, d, undefined) {
+
+  // check network status
+  function checkNetwork(e) {
+    if ("onLine" in navigator) {
+      if (navigator.onLine) {
+        d.getElementsByTagName("html")[0].setAttribute("offline", false);
+        d.getElementsByTagName("html")[0].setAttribute("online", true);
+        if (d.getElementById("offline-message")) d.getElementById("offline-message").setAttribute("aria-hidden", true);
+        if (w.GSC) w.GSC.offline = false;
+        if (w.GSC) w.GSC.online = true;
+      } else {
+        d.getElementsByTagName("html")[0].setAttribute("offline", true);
+        d.getElementsByTagName("html")[0].setAttribute("online", false);
+        if (d.getElementById("offline-message")) d.getElementById("offline-message").setAttribute("aria-hidden", false);
+        if (w.GSC) w.GSC.offline = true;
+        if (w.GSC) w.GSC.online = false;
+      }
+    }
+  }
+
+  // feature detection: "touch"
+  if (w.GSC) {
+    GSC.touch = ("ontouchstart" in w || w.DocumentTouch && d instanceof DocumentTouch) ? true : false;
+    if (GSC.touch) d.getElementsByTagName("html")[0].setAttribute("touch", true);
+  }
+
+  // feature detection: "online"
+  if ("onLine" in navigator) {
+    w.addEventListener("load", function () {
+      w.addEventListener("online", checkNetwork);
+      w.addEventListener("offline", checkNetwork);
+      checkNetwork();
+    });
+  }
+
+  // GSC.GetFileExtension() - parse filename, return the file extension
+  if (typeof GSC.GetFileExtension !== "function") GSC.GetFileExtension = function(filename) {
+    if (filename) {
+        return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+    }
+    return "";
+  }
+
+  // GSC.CopyClipboard() - copy data to clipboard
+  if (typeof GSC.CopyClipboard !== "function") GSC.CopyClipboard = function(data) {
+    var el = d.createElement("textarea");
+    el.value = data;
+    el.setAttribute("readonly", "");
+    el.style.position = "absolute";
+    el.style.left = "-9999px";
+    d.body.appendChild(el);
+    var selected =
+      d.getSelection().rangeCount > 0 ? d.getSelection().getRangeAt(0) : false;
+    el.select();
+    d.execCommand("copy");
+    d.body.removeChild(el);
+    if (selected) {
+      d.getSelection().removeAllRanges();
+      d.getSelection().addRange(selected);
+    }
+  }
+
+  // GSC.CopyThisText() - copy data-copy or text from an element to clipboard
+  if (typeof GSC.CopyThisText !== "function") GSC.CopyThisText = function(that) {
+    if (that) {
+      var t = $(that).data("copy").trim();
+      if (!t) t = $(that).text().trim();
+      GSC.CopyClipboard(t);
+    }
+  }
+
+  // GSC.CopyThisHtml() - copy HTML from an element to clipboard
+  if (typeof GSC.CopyThisHtml !== "function") GSC.CopyThisHtml = function(that) {
+    if (that) {
+      GSC.CopyClipboard($(that).html().trim());
+    }
+  }
+
+  // setCookie() general function
+  if (typeof window.setCookie !== "function") window.setCookie = function (key, value, days) {
+    if (key === undefined) return false;
+    if (value === undefined) return false;
+    if (days === undefined) days = 31;
+    if (days == 0) { // session cookie      
+      document.cookie = key + "=" + value + ";path=/";
+    } else {
+      var d1 = new Date().getTime();
+      var d2 = d1 + (parseInt(days) * 86400 * 1000); // time is in miliseconds!
+      document.cookie = key + "=" + value + ";path=/" + ";expires=" + new Date(d2).toGMTString();
+    }
+  }
+
+  // getCookie() general function
+  if (typeof window.getCookie !== "function") window.getCookie = function (key) {
+    if (key === undefined) return false;
+    var v = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return v ? v[2] : null;
+  }
+
+  // delCookie() general function
+  if (typeof window.delCookie !== "function") window.delCookie = function (key) {
+    if (key === undefined) return false;
+    var date = new Date();
+    date.setTime(0);
+    document.cookie = key + "=;path=/" + ";expires=" + date.toGMTString();
+  }
+})(window, document);
+
+</script>

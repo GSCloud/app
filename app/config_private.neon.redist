@@ -1,0 +1,37 @@
+### PWA MINI APP
+### PRIVATE CONFIGURATION
+### Fred Brooker <git@gscloud.cz>
+### @license MIT https://gscloud.cz/LICENSE
+### @link https://app.gscloud.cz
+
+# cookie: tracy-debug
+#DEBUG_COOKIE: "1234"
+
+# Google OAuth 2.0
+#goauth_client_id: "someid.apps.googleusercontent.com"
+#goauth_secret: "some_secret"
+
+# Google Cloud Platfrom keys (under APP)
+#gcp_keys: "/keys/some.json"
+
+# Cloudflare identification
+cf: [
+#  email: "joe@foo.bar"
+#  apikey: "some_key"
+#  zoneid: [
+#    "some_key"
+#    "some_key"
+#  ]
+]
+
+# grants and permissions
+admin_groups: [
+  admin: [
+    joe@foo.bar
+    mike@foo.bar
+  ]
+  editor: [
+  ]
+  default: [
+  ]
+]

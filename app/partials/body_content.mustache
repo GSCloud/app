@@ -1,0 +1,226 @@
+<div id="appinfo_modal" class="modal hidden center">
+  <h5 class="bold center-align white-text" tabindex="-1">{{ l.tit_appinfo }}</h5>
+  <div class="bold">
+    <a rel=nofollow target=_blank class="green-text alias" href="https://github.com/GSCloud/app">https://github.com/GSCloud/app</a>
+  </div>
+  <div class="small-text" tabindex="-1">
+  <br>
+  {{ l.text_version }} <b class="white-text">{{ VERSION_SHORT }}</b>
+  &nbsp;&nbsp;
+  {{ l.text_date }} <b class="white-text">{{ VERSION_DATE }}</b>
+  </div>
+  <div class="center bold large-text orange-text">
+  <br>
+  {{>webshare}}
+  </div>
+  <nav>
+    <button class="nav_api grey responsive bold white-text">{{ l.but_api }}</button>
+  </nav>  
+  <nav>
+    <button class="nav_update responsive blue bold white-text">{{ l.but_update }}</button>
+  </nav>
+  <div class="grid">
+    <div class="col s6">
+      <a href="https://web.dev/progressive-web-apps/"><img class="responsive block" src="{{ cdn }}/img/pwa.webp" alt="PWA"/></a>
+    </div>
+    <div class="col s6">
+      <a href="https://beercss.com/"><img class="responsive block" src="{{ cdn }}/img/beercss.webp" alt="Beercss"/></a>
+    </div>
+  </div>
+  <br>
+  <div class="small-text bold center">
+    {{ l.author }}
+  </div>
+  <div class="small-text center">
+    {{ l.no_cookies }}
+  </div>
+</div>
+<div id="err_connection" class="toast pink white-text hidden">
+  <i>error</i>
+  <span>{{ l.err_connection}}</span>
+</div>
+<div id="xhr_error" class="toast pink white-text hidden">
+  <i>error</i>
+  <span id="xhr_error_text"></span>
+</div>
+<div id="config" class="white-text hidden section">
+  <div class="grid medium-space padding" tabindex="-1">
+    <div class="s6 middle-align right-align">
+      {{ l.switch_design }}
+    </div>
+    <div class="s6 left-align">
+      <label class="switch">
+        <input type="checkbox" class="ui">
+        <span>
+          <i>dark_mode</i>
+          <i>light_mode</i>
+        </span>
+      </label>
+    </div>
+  </div>
+</div>
+<div id="user" class="white-text hidden section">
+  <div class="center-align padding">
+    <div class="no-padding" tabindex="-1">
+      {{^user.id}}
+        <div class="center">
+          {{>login}}
+        </div>
+      {{/user.id}}
+      <div class="center-align small-padding" tabindex="-1">
+        {{l.text_quota }}&nbsp;<span class="bold quota_actual"></span>/<span class="bold quota_total"></span>
+      </div>
+      {{#user.id}}
+        <div class="center">
+          {{>logout}}
+        </div>
+      {{/user.id}}
+    </div>
+  </div>
+{{#admin_group_tester}}
+    <div class="center-align padding" tabindex="-1">
+      <a href="?cssdebug=1&nonce={{ nonce }}" class="">
+        <button class="responsive blue bold white-text">CSS debugger</button>
+      </a>
+    </div>
+    <article id="debuglist" class="truncate left-align black small-padding small-text" tabindex="-1">
+    </article>
+{{/admin_group_tester}}
+</div>
+
+<h1 class="hidden">{{ l.tit_appinfo }}</h1>
+
+<section class="hidden">
+  {{>content}}
+</section>
+
+<script>
+  (function (w, undefined) {
+    'use strict';
+
+    // something is really broken = unsupported browser
+    if (!localStorage) {
+      w.location.href = '/err/600';
+      if (!localStorage['uuid']) {
+        w.location.href = '/err/600';
+      }
+    }
+
+    // last interaction time
+    GSC.lastclick = null
+
+    // user information
+    GSC.user = null;
+
+    // list of modals
+    GSC.modals = [];
+
+    // data cache
+    GSC.cache = [];
+
+    // context menu
+    w.oncontextmenu = function(e) {
+      if (e.target && e.target.id) {
+        // switch by id
+        switch (e.target.id) {
+          case 'logo':
+            if (GSC.touch) $('.nav_update').click();
+            break;
+
+          default:
+            console.log(e.target.id);
+        }
+      }
+      // true = enable context menu on localhost
+      if (location.protocol == 'http:') return true;
+      return false; // false = prevent context menu
+    }
+
+    // GSC.ComOn() - communication icon fade-in = ON
+    if (typeof GSC.ComOn !== 'function') GSC.ComOn = function() {
+      if (GSC.offline) return;
+      if (!document.hidden) {
+        $('#comm').removeClass('hidden').fadeIn(5);
+      }
+    }
+
+    // GSC.ComOff() - communication icon fade-out = OFF
+    if (typeof GSC.ComOff !== 'function') GSC.ComOff = function() {
+      $('#comm').removeClass('hidden').fadeOut(25);
+    }
+
+    // GSC.D() - add text to debug list (string)
+    if (typeof GSC.D !== 'function') GSC.D = function(x) {
+      if (x === undefined) return;
+      var current = new Date();
+      var t = current.toLocaleTimeString(); 
+      $('#debuglist').prepend('<p><span class="green-text">' + t + '</span>&nbsp;' + x + '</p>');
+    }
+
+    // *** DELAYED FUNCTIONS ***
+
+    // AJAX event handlers
+    GSC._fn.push(function XHR() {
+      $(document).ajaxSend(function(evt, request, settings) {
+        GSC.ComOn();
+        GSC.D('<b>'
+          + settings.type
+          + '</b> <a class="blue-text underline" target=_blank href="'
+          + settings.url + '">'
+          + settings.url + '</a>');
+      });
+      $(document).ajaxComplete(function() {
+        GSC.ComOff();
+      });
+    });
+
+    // custom functions
+    GSC._fn.push(function app() {
+
+      // set quota text
+      function setQuota(data) {
+          if (data.api_usage) $('.quota_actual').html(data.api_usage);
+          if (data.api_quota) $('.quota_total').html(data.api_quota);
+      };
+
+      // check version
+      function checkVersion() {
+        if (GSC.offline) return;
+
+        // 10 secs. timeout limiter
+        if (GSC.version_timestamp && (GSC.version_timestamp + 10*1000 > +new Date())) return false;
+        var nonce = '?nonce=' + Math.round(Math.random() * 1000000);
+        $.get('/api/v1/GetVersion' + nonce, function(data) {
+          setQuota(data);
+          GSC.version_timestamp = +new Date();
+          if (data && data.data && data.data.version) {
+            if (data.data.version != '{{ VERSION }}') {
+              if (GSC.chverint) clearInterval(GSC.chverint);
+              $('#top_nav span.badge').removeClass('hidden');
+              $('.nav_update').removeClass('blue').addClass('red');
+              GSC.D('<span class="red bold white-text">&nbsp;NEW VERSION IS AVAILABLE!&nbsp;</span>');
+
+              // skip the modal dialog if user interaction is under 60 seconds
+              if (GSC.lastclick && (+new Date() < (GSC.lastclick + 60*1000))) return;
+              if (GSC.modals.length) {
+                GSC.modals.forEach(el => {
+                  $('#' + el).removeClass('active');
+                });
+              }
+              GSC.modals = [];
+              GSC.modals.push('appinfo_modal');
+              $('#appinfo_modal').addClass('active');
+            }
+          }
+        });
+      }
+
+      // check backend version
+      GSC.chverint = setInterval(function() {
+        checkVersion()
+      }, 30*1000);
+      checkVersion();
+    });
+
+  })(window);
+</script>

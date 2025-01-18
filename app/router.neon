@@ -1,0 +1,8 @@
+defaults:
+  language: en
+  template: app
+
+home:
+  path: /
+  presenter: app
+  sitemap: true
